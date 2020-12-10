@@ -1,36 +1,46 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+//props style
+import PropTypes from 'prop-types'; 
+//react-router
 import {Link} from "react-router-dom";
+//icon
 import { FaCartPlus } from "react-icons/fa";
+//context
 import {ProductConsumer} from "./context/ProductProvider"
+
 export default class Products extends Component {
     render() {
         const {id, title, img ,price,inCart} = this.props.product;
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
-                <div className="card " onClick={()=>console.log('you click me on ...')}>
-                    <div className="img-container">
-                    <Link to='/detail'>
-                        <img src={img} alt="product" className="card-img-top"/>
-                    </Link> 
-                    
-                    <button
-                    className="cart-btn"
-                    disabled={inCart? true: false}
-                    onClick = {()=>{
-                        console.log("added to the cart")
-                    }}
-                    >
-                        {inCart ?(
-                            <p className="text-capitalize mb-0" disabled>
-                                {" "}
-                                In Cart
-                            </p>
-                        ):(
-                            <FaCartPlus/>
-                        )}
-                    </button>
-                    </div>
+                <div className="card " >
+                   <ProductConsumer>
+                       {(value)=>{
+                        return <div className="img-container" onClick={()=>value.handleDetail(id)}>
+                        <Link to='/detail'>
+                            <img src={img} alt="product" className="card-img-top"/>
+                        </Link> 
+                        
+                        <button
+                        className="cart-btn"
+                        disabled={inCart? true: false}
+                        onClick = {()=>{
+                            console.log("added to the cart")
+                        }}
+                        >
+                            {inCart ?(
+                                <p className="text-capitalize mb-0" disabled>
+                                    {" "}
+                                    In Cart
+                                </p>
+                            ):(
+                                <FaCartPlus/>
+                            )}
+                        </button>
+                        </div>
+                        }}
+                   </ProductConsumer>
                     <div className="card-footer d-flex justify-content-between">
                         <p className="align-item-center mb-0">{title}</p>
                         <h5 className="text-primary font-italic mb-0">
@@ -44,6 +54,17 @@ export default class Products extends Component {
         );
     }
 }
+
+Products.propTypes = {
+    product:PropTypes.shape({
+        id:PropTypes.number,
+        title:PropTypes.string,
+        img:PropTypes.string,
+        inCart:PropTypes.bool,
+        count:PropTypes.number,
+        total:PropTypes.number
+    }).isRequired
+};
 const ProductWrapper = styled.div`
     .card{
         border-color:transparent;

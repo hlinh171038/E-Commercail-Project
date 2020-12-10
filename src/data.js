@@ -49,7 +49,7 @@ export const storeProducts = [
 export const detailProduct =  {
     id:1,
     title:"Google Pixel - Black",
-    img:"img/product-1.png",
+    img:"img/product-1.jpg",
     price:10,
     company:"GOOGLE",
     info:"Google Workspace, (formerly G Suite until October 2020) is a monthly subscription offering for organizations and businesses to get access to a collection of Google's services, including Gmail, Google Drive and Google Docs, Google Sheets and Google Slides, with additional administrative tools, unique domain names, and 24/7 support. ",

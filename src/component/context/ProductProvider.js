@@ -5,11 +5,36 @@ const ProductContext = React.createContext();
 //Consummer (that pass props)
 class ProductProvider extends Component {
     state ={
-        products:storeProducts,
+        products:[],
         detailProduct:detailProduct
     }
-    handleDetail = ()=>{
-        console.log('hello from detail')
+    //call data from componentDidMount 
+    componentDidMount(){
+        this.setProduct();
+    }
+    // create function setProduct to call data
+    setProduct = () =>{
+        let tempProduct = [];
+        storeProducts.forEach(item =>{
+            const singleItem = {...item}
+            tempProduct = [...tempProduct,singleItem];
+        })
+        this.setState({
+            products:tempProduct
+        })
+    }
+    //detail product when user click
+    getDetail = id =>{
+       var detailProduct = this.state.products.find(item =>{
+           return  item.id ===id
+        });
+        return detailProduct;
+    }
+    handleDetail = (id)=>{
+        let product = this.getDetail(id);
+        this.setState({
+            detailProduct:product
+        })
     }
     addToCart = ()=>{
         console.log('hello from add to cart')
